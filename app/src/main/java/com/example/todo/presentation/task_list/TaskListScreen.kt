@@ -45,7 +45,9 @@ fun TaskListScreen(navController: NavController, viewModel: TaskListViewModel = 
                 .background(MaterialTheme.colorScheme.background)
         ) {
             items(tasks) { task ->
-                TaskItem(task = task) { viewModel.deleteTask(task) }
+                TaskItem(task = task,
+                    onDeleteClick = { viewModel.deleteTask(task) },
+                    onToggleCompleted = { viewModel.toggleCompleted(task) })
             }
         }
 
@@ -62,7 +64,7 @@ fun TaskListScreen(navController: NavController, viewModel: TaskListViewModel = 
 }
 
 @Composable
-fun TaskItem(task: Task, onDeleteClick: () -> Unit) {
+fun TaskItem(task: Task, onDeleteClick: () -> Unit, onToggleCompleted: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -87,7 +89,7 @@ fun TaskItem(task: Task, onDeleteClick: () -> Unit) {
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 modifier = Modifier.weight(1f)
             ) {
-                Checkbox(checked = task.completed, onCheckedChange = {})
+                Checkbox(checked = task.completed, onCheckedChange = { onToggleCompleted() })
                 IconButton(onClick = { onDeleteClick() }) {
                     Icon(
                         imageVector = Icons.Default.Delete, contentDescription = "Delete Task"
