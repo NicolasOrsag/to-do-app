@@ -24,4 +24,6 @@ class TaskRepository(private val api: TaskApi, private val taskDao: TaskDao) {
         }
     }
     fun getTasks() = taskDao.getAllTasks()
+
+    suspend fun insertTask(task: Task) = taskDao.insertTask(task)
 }

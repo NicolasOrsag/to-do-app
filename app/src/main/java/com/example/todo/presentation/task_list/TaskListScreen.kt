@@ -1,5 +1,6 @@
 package com.example.todo.presentation.task_list
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -27,16 +28,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.todo.data.local.model.Task
+import com.example.todo.presentation.navigation.Screen
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun TaskListScreen(viewModel: TaskListViewModel = koinViewModel()) {
+fun TaskListScreen(navController: NavController, viewModel: TaskListViewModel = koinViewModel()) {
     val tasks by viewModel.tasks.collectAsState()
 
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
         ) {
             items(tasks) { task ->
                 TaskItem(task = task)
@@ -44,7 +49,7 @@ fun TaskListScreen(viewModel: TaskListViewModel = koinViewModel()) {
         }
 
         FloatingActionButton(
-            onClick = { }, // Implement this function in your ViewModel
+            onClick = {navController.navigate(Screen.AddTaskScreen.route) }, // Implement this function in your ViewModel
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(16.dp),
