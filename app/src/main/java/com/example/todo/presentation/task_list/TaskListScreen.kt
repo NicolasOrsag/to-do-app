@@ -23,12 +23,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.todo.data.local.model.Task
+import com.example.todo.presentation.components.DeleteConfirmationDialog
 import com.example.todo.presentation.navigation.Screen
 import org.koin.androidx.compose.koinViewModel
 
@@ -69,6 +72,7 @@ fun TaskListScreen(
 fun TaskItem(
     task: Task, onDeleteClick: () -> Unit, onToggleCompleted: () -> Unit, onItemClick: () -> Unit
 ) {
+    val showDialog = remember { mutableStateOf(false) }
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -95,11 +99,18 @@ fun TaskItem(
                 modifier = Modifier.weight(1f)
             ) {
                 Checkbox(checked = task.completed, onCheckedChange = { onToggleCompleted() })
-                IconButton(onClick = { onDeleteClick() }) {
+
+                IconButton(onClick = { showDialog.value = true }) {
                     Icon(
                         imageVector = Icons.Default.Delete, contentDescription = "Delete Task"
                     )
                 }
+                // Confirmation dialog
+                DeleteConfirmationDialog(
+                    showDialog = showDialog.value,
+                    onConfirmDelete = onDeleteClick,
+                    onDismiss = { showDialog.value = false }
+                )
             }
         }
     }

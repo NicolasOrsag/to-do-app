@@ -19,10 +19,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.todo.presentation.components.DeleteConfirmationDialog
 import com.example.todo.utils.DateTimeUtils
 import org.koin.androidx.compose.koinViewModel
 
@@ -32,6 +35,7 @@ fun DetailTaskScreen(
 ) {
     val task by viewModel.task.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
+    val showDialog = remember { mutableStateOf(false) }
 
     LaunchedEffect(taskId) {
         viewModel.getTaskById(taskId)
@@ -85,14 +89,20 @@ fun DetailTaskScreen(
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                         Button(
-                            onClick = {
-                                viewModel.deleteTask(task)
-                                navController.popBackStack()
-                            },
+                            onClick = { showDialog.value = true },
                             colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary)
                         ) {
                             Text(text = "Delete")
                         }
+                        // Confirmation dialog
+                        DeleteConfirmationDialog(
+                            showDialog = showDialog.value,
+                            onConfirmDelete = {
+                                viewModel.deleteTask(task)
+                                navController.popBackStack()
+                            },
+                            onDismiss = { showDialog.value = false }
+                        )
                     } ?: run {
                         Text(
                             text = "Task not found",
