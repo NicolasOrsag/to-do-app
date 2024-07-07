@@ -2,7 +2,6 @@ package com.example.todo.presentation.navigation
 
 import android.util.Log
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -29,10 +28,9 @@ fun Navigation() {
             arguments = listOf(navArgument("taskId") { type = NavType.IntType })
         ) { backStackEntry ->
             val taskId = backStackEntry.arguments?.getInt("taskId")
-            if(taskId != null){
+            if (taskId != null) {
                 DetailTaskScreen(navController, taskId)
-            }
-            else{
+            } else {
                 Log.e("Error", "TaskId for DetailTaskScreen is null")
             }
         }

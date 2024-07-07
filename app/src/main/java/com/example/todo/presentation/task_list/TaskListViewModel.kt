@@ -7,7 +7,6 @@ import com.example.todo.domain.DeleteTaskFromDbUseCase
 import com.example.todo.domain.FetchTasksFromNetworkToDbUseCase
 import com.example.todo.domain.GetTasksFromDbUseCase
 import com.example.todo.domain.UpdateTaskCompletedUseCase
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -27,13 +26,13 @@ class TaskListViewModel(
         }
     }
 
-    fun deleteTask(task: Task){
+    fun deleteTask(task: Task) {
         viewModelScope.launch {
             deleteTaskFromDbUseCase(task)
         }
     }
 
-    fun toggleCompleted(task: Task){
+    fun toggleCompleted(task: Task) {
         viewModelScope.launch {
             updateTaskCompletedUseCase(task)
         }

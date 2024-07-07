@@ -1,6 +1,5 @@
 package com.example.todo.data.remote.dto
 
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable

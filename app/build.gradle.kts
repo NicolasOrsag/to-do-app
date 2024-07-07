@@ -87,13 +87,13 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.navigation)
     implementation(libs.koin.androidx.compose)
-    testImplementation (libs.koin.test)
+    testImplementation(libs.koin.test)
 
     // Navigation
     implementation(libs.androidx.navigation.compose)
 
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0")
 
     implementation(libs.kotlinx.serialization.json)
 }

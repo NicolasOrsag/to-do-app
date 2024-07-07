@@ -3,7 +3,6 @@ package com.example.todo.utils
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
-import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 object DateTimeUtils {
@@ -20,7 +19,7 @@ object DateTimeUtils {
         return formattedDateTime
     }
 
-    fun formatDate(inputDateString:String): String{
+    fun formatDate(inputDateString: String): String {
         // Parse the input date string to an Instant
         val instant = Instant.parse(inputDateString)
 

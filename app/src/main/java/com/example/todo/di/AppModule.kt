@@ -23,7 +23,6 @@ import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.serialization.kotlinx.json.json
 import org.koin.android.ext.koin.androidContext
-import org.koin.androidx.compose.get
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -54,7 +53,7 @@ val appModule = module {
     // Provide ViewModels
     viewModel { TaskListViewModel(get(), get(), get(), get()) }
     viewModel { AddTaskViewModel(get()) }
-    viewModel { DetailTaskViewModel(get(), get())}
+    viewModel { DetailTaskViewModel(get(), get()) }
 }
 
 fun provideHttpClient() = HttpClient(Android) {
