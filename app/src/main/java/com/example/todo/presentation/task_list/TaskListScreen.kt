@@ -28,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.todo.data.local.model.Task
 import com.example.todo.presentation.navigation.Screen
@@ -44,12 +45,12 @@ fun TaskListScreen(navController: NavController, viewModel: TaskListViewModel = 
                 .background(MaterialTheme.colorScheme.background)
         ) {
             items(tasks) { task ->
-                TaskItem(task = task)
+                TaskItem(task = task) { viewModel.deleteTask(task) }
             }
         }
 
         FloatingActionButton(
-            onClick = {navController.navigate(Screen.AddTaskScreen.route) }, // Implement this function in your ViewModel
+            onClick = { navController.navigate(Screen.AddTaskScreen.route) }, // Implement this function in your ViewModel
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(16.dp),
@@ -61,7 +62,7 @@ fun TaskListScreen(navController: NavController, viewModel: TaskListViewModel = 
 }
 
 @Composable
-fun TaskItem(task: Task) {
+fun TaskItem(task: Task, onDeleteClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -87,7 +88,7 @@ fun TaskItem(task: Task) {
                 modifier = Modifier.weight(1f)
             ) {
                 Checkbox(checked = task.completed, onCheckedChange = {})
-                IconButton(onClick = {}) {
+                IconButton(onClick = { onDeleteClick() }) {
                     Icon(
                         imageVector = Icons.Default.Delete, contentDescription = "Delete Task"
                     )

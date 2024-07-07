@@ -7,6 +7,7 @@ import com.example.todo.data.local.database.TaskDatabase
 import com.example.todo.data.remote.TaskApi
 import com.example.todo.data.remote.TaskApiImpl
 import com.example.todo.data.repository.TaskRepository
+import com.example.todo.domain.DeleteTaskFromDbUseCase
 import com.example.todo.domain.FetchTasksFromNetworkToDbUseCase
 import com.example.todo.domain.GetTasksFromDbUseCase
 import com.example.todo.domain.InsetTaskToDbUseCase
@@ -43,9 +44,10 @@ val appModule = module {
     single { GetTasksFromDbUseCase(get()) }
     single { FetchTasksFromNetworkToDbUseCase(get()) }
     single { InsetTaskToDbUseCase(get())}
+    single { DeleteTaskFromDbUseCase(get())}
 
     // Provide ViewModel
-    viewModel { TaskListViewModel(get(), get()) }
+    viewModel { TaskListViewModel(get(), get(), get()) }
 
     viewModel { AddTaskViewModel(get()) }
 }
