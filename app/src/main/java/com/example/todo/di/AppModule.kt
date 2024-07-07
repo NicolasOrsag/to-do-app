@@ -9,10 +9,12 @@ import com.example.todo.data.remote.TaskApiImpl
 import com.example.todo.data.repository.TaskRepository
 import com.example.todo.domain.DeleteTaskFromDbUseCase
 import com.example.todo.domain.FetchTasksFromNetworkToDbUseCase
+import com.example.todo.domain.GetTaskByIdUseCase
 import com.example.todo.domain.GetTasksFromDbUseCase
 import com.example.todo.domain.InsetTaskToDbUseCase
 import com.example.todo.domain.UpdateTaskCompletedUseCase
 import com.example.todo.presentation.add_task.AddTaskViewModel
+import com.example.todo.presentation.detail_task.DetailTaskViewModel
 import com.example.todo.presentation.task_list.TaskListViewModel
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
@@ -44,14 +46,15 @@ val appModule = module {
     // Provide Use Cases
     single { GetTasksFromDbUseCase(get()) }
     single { FetchTasksFromNetworkToDbUseCase(get()) }
-    single { InsetTaskToDbUseCase(get())}
-    single { DeleteTaskFromDbUseCase(get())}
-    single { UpdateTaskCompletedUseCase(get())}
+    single { InsetTaskToDbUseCase(get()) }
+    single { DeleteTaskFromDbUseCase(get()) }
+    single { UpdateTaskCompletedUseCase(get()) }
+    single { GetTaskByIdUseCase(get()) }
 
-    // Provide ViewModel
+    // Provide ViewModels
     viewModel { TaskListViewModel(get(), get(), get(), get()) }
-
     viewModel { AddTaskViewModel(get()) }
+    viewModel { DetailTaskViewModel(get(), get())}
 }
 
 fun provideHttpClient() = HttpClient(Android) {

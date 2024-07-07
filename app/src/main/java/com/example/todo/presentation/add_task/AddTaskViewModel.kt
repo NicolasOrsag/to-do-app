@@ -8,16 +8,9 @@ import com.example.todo.utils.DateTimeUtils
 import kotlinx.coroutines.launch
 
 class AddTaskViewModel(private val insetTaskToDbUseCase: InsetTaskToDbUseCase) : ViewModel() {
-    fun saveTask(title: String, description: String?) {
+    fun saveTask(title: String, description: String) {
         viewModelScope.launch {
-            insetTaskToDbUseCase(
-                Task(
-                    title = title,
-                    description = description,
-                    completed = false,
-                    createdAt = DateTimeUtils.getCurrentDateTimeString()
-                )
-            )
+            insetTaskToDbUseCase(title, description.ifEmpty { null })
         }
 
     }

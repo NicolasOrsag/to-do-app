@@ -1,6 +1,7 @@
 package com.example.todo.presentation.task_list
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -35,7 +36,10 @@ import com.example.todo.presentation.navigation.Screen
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun TaskListScreen(navController: NavController, viewModel: TaskListViewModel = koinViewModel()) {
+fun TaskListScreen(
+    navController: NavController,
+    viewModel: TaskListViewModel = koinViewModel()
+) {
     val tasks by viewModel.tasks.collectAsState()
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -47,7 +51,8 @@ fun TaskListScreen(navController: NavController, viewModel: TaskListViewModel = 
             items(tasks) { task ->
                 TaskItem(task = task,
                     onDeleteClick = { viewModel.deleteTask(task) },
-                    onToggleCompleted = { viewModel.toggleCompleted(task) })
+                    onToggleCompleted = { viewModel.toggleCompleted(task) },
+                    onItemClick = { navController.navigate(Screen.DetailTaskScreen.route + "/" + task.id.toString()) })
             }
         }
 
@@ -64,7 +69,9 @@ fun TaskListScreen(navController: NavController, viewModel: TaskListViewModel = 
 }
 
 @Composable
-fun TaskItem(task: Task, onDeleteClick: () -> Unit, onToggleCompleted: () -> Unit) {
+fun TaskItem(
+    task: Task, onDeleteClick: () -> Unit, onToggleCompleted: () -> Unit, onItemClick: () -> Unit
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -75,7 +82,8 @@ fun TaskItem(task: Task, onDeleteClick: () -> Unit, onToggleCompleted: () -> Uni
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(16.dp)
+                .clickable { onItemClick() },
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {

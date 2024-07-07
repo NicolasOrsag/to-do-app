@@ -25,6 +25,8 @@ class TaskRepository(private val api: TaskApi, private val taskDao: TaskDao) {
 
     fun getTasks() = taskDao.getAllTasks()
 
+    suspend fun getTask(taskId: Int) = taskDao.getTaskById(taskId)
+
     suspend fun insertTask(task: Task) = withContext(Dispatchers.IO) {
         taskDao.insertTask(task)
     }
